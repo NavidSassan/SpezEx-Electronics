@@ -13,6 +13,6 @@ display = ssd1306.SSD1306_I2C(128, 64, i2c)
 display.fill(0) # Clear the display
 display.text('Hello, World!', 0, 0, 1) # Write text at coordinates (0, 0)
 display.text('Pfadi St. Ulrich', 0, 20, 1) # Write text at coordinates (0, 0)
-display.text('ist the best', 0, 40, 1) # Write text at coordinates (0, 0)
+display.text('is the best', 0, 40, 1) # Write text at coordinates (0, 0)
 display.show() # Update the display
 print('end')
