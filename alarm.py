@@ -7,9 +7,10 @@ tor = Pin(16, Pin.PULL_DOWN)
 button = Pin(19, Pin.PULL_DOWN)
 
 i2c = SoftI2C(sda=Pin(21), scl=Pin(22))
-print(i2c.scan())
 
 display = ssd1306.SSD1306_I2C(128, 64, i2c)
+
+inbuilt_led = Pin(2, Pin.OUT)
 
 led1 = Pin(12, Pin.OUT)
 led2 = Pin(13, Pin.OUT)
@@ -86,6 +87,7 @@ def alarmton():
             time.sleep(0.6)
 
         speaker.duty_u16(0)
+        time.sleep(1)
 
 
 alarm = False
@@ -112,4 +114,4 @@ while True:
     print(f'alarm: {alarm}')
     print()
 
-    time.sleep(0.2)
+    inbuilt_led.value(not inbuilt_led.value())
