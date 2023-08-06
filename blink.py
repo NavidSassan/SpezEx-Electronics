@@ -40,10 +40,3 @@ while True:
 #         time.sleep(0.3)
 #
 #     time.sleep(0.1)
-#
-
-# toggle (shorter)
-# while True:
-#     if btn.value():
-#         led.toggle()
-#     time.sleep(0.1)
