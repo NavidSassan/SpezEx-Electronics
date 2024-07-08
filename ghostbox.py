@@ -70,9 +70,14 @@ html = """<!DOCTYPE html>
 <html>
 <head>
     <title>ESP32 Ghost Detector</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        button { font-size: 20px; margin: 10px; padding: 10px; }
-        input[type=range] { width: 300px; }
+        body { font-family: Arial, sans-serif; text-align: center; }
+        button { font-size: 20px; margin: 10px; padding: 15px 30px; }
+        input[type=range] { width: 80%; }
+        h1 { font-size: 24px; }
+        p { font-size: 18px; }
+        #speedValue { font-weight: bold; }
     </style>
 </head>
 <body>
