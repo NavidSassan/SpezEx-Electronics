@@ -176,6 +176,11 @@ class Puzzle():
                 self.btn_led.off()
                 time.sleep(0.2)
 
+            # wait until read_card returns None, else we get a wrong first read
+            while (temp := self.read_card()) is not None:
+                print(f'temp: {temp}')
+                time.sleep(0.1)
+
             if self.check_solution(self.solution_level1, read_card_ids, self.card2sol_level1):
                 self.display.fill(0)
                 self.display.text('Game 1', 0, 0, 1)
@@ -192,11 +197,6 @@ class Puzzle():
                 self.display.show()
                 time.sleep(2) # sleep so one can read the messages on the screen
                 print('wrong, therefore repeat')
-
-                # wait until read_card returns None, else we get a wrong first read
-                while (temp := self.read_card()) is not None:
-                    print(f'temp: {temp}')
-                    time.sleep(0.1)
 
     def level2(self):
         # List of card IDs for unlocking
