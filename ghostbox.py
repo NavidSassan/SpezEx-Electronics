@@ -22,11 +22,11 @@ print(ap.ifconfig())
 
 # NeoPixel setup
 num_pixels = 10  # 2x5 array
-pin = 22
-np = neopixel.NeoPixel(Pin(pin), num_pixels)
+neo_pin = 4
+np = neopixel.NeoPixel(Pin(neo_pin), num_pixels)
 
 # Buzzer setup
-buzzer = PWM(Pin(21), freq=1000, duty=0)
+buzzer = PWM(Pin(15), freq=1000, duty=0)
 
 blinking = False
 crazy_mode = False
@@ -38,8 +38,8 @@ def random_blink_beep():
         if blinking:
             if crazy_mode:
                 # Crazy mode: rapid random colors and patterns
-                for _ in range(num_pixels):
-                    np[_] = (urandom.getrandbits(8), urandom.getrandbits(8), urandom.getrandbits(8))
+                for i in range(num_pixels):
+                    np[i] = (urandom.getrandbits(8), urandom.getrandbits(8), urandom.getrandbits(8))
                 np.write()
                 buzzer.duty(512)  # Buzzer on
                 time.sleep(urandom.uniform(0.05, 0.2))
@@ -47,8 +47,7 @@ def random_blink_beep():
             else:
                 # Randomly light up some NeoPixels
                 np.fill((0, 0, 0))  # Turn off all pixels first
-                for _ in range(urandom.getrandbits(3) + 1):  # Random number of pixels to light up
-                    i = urandom.getrandbits(3) % num_pixels
+                for i in [urandom.choice(range(num_pixels)) for _ in range(urandom.randint(1, num_pixels))]:
                     np[i] = (urandom.getrandbits(8), urandom.getrandbits(8), urandom.getrandbits(8))
                 np.write()
                 buzzer.duty(512)  # Buzzer on
