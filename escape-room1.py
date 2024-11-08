@@ -53,11 +53,10 @@ class Puzzle():
         }
 
         self.solution_level1 = [
-            'A',
             'B',
+            'E',
             'C',
             'D',
-            'E',
         ]
 
 
@@ -157,8 +156,8 @@ class Puzzle():
 
             if self.check_solution(self.solution_level1, read_card_ids, self.card2sol_level1):
                 self.display.fill(0)
-                self.display.text('Safe Code', 0, 0, 1)
-                self.display.text('9-6-5-0-5-8-1-7', 0, 20, 1)
+                self.display.text('Safe Word', 0, 0, 1)
+                self.display.text('TRUMP', 0, 20, 1)
                 self.display.show()
                 time.sleep(2) # sleep so one can read the messages on the screen
                 return # exit the function
