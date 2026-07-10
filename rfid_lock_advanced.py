@@ -1,6 +1,18 @@
 # https://electropeak.com/learn/interfacing-rdm6300-125khz-rfid-reader-module-with-arduino/
 # https://docs.micropython.org/en/latest/library/framebuf.html
 
+# Level 1:
+# * Scan four distinct RFID cards.
+# * Press the button to submit.
+# * The order must match the predefined solution.
+
+# Level 2:
+# * A random riddle (shapes on the display) appears.
+# * Scan four cards matching that riddle’s solution.
+# * Press the button to submit.
+# * If both levels are solved, a final “code” is displayed.
+
+
 import functools
 import random
 import time
@@ -52,11 +64,12 @@ class Puzzle():
             'E': [12906581, 7888819],  # green,    blue
         }
 
+        # TODO: adjust this
         self.solution_level1 = [
-            'E',
+            'C',
             'A',
             'D',
-            'B',
+            'E',
         ]
 
         self.card2sol_level2 = {
@@ -235,11 +248,13 @@ class Puzzle():
 
     def run(self):
         self.level1()
-        self.level2()
+        # self.level2()
 
         self.display.fill(0)
         self.display.text('Code:', 0, 0, 1)
-        self.display.text('1234 oder 1234', 0, 50, 1)
+        # TODO: adjust this
+        # rechts-links-links-unten-rechts-oben-rechts-links
+        self.display.text('RLLURORL', 0, 50, 1)
         self.display.show()
 
 
