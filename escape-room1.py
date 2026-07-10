@@ -43,20 +43,10 @@ class Puzzle():
             8736126: 'Rot',
         }
 
-        self.card2sol_level1 = {
-            #     puzzle1, # puzzle1
-            'A': [6008435],  # yellow
-            'B': [8644032],  # red
-            'C': [13012325], # grey
-            'D': [8202175],  # blue
-            'E': [12906581],  # green
-        }
-
-        self.solution_level1 = [
-            'B',
-            'E',
-            'C',
-            'D',
+        # accepted color combinations (either box unlocks)
+        self.solutions_level1 = [
+            ['Orange', 'Rot', 'Blau', 'Schwarz'],  # box 1
+            ['Gelb', 'Rot', 'Blau', 'Grau'],       # box 2
         ]
 
 
@@ -95,20 +85,17 @@ class Puzzle():
         return None
 
 
-    def check_solution(self, solution, given_cards, card2sol):
+    def check_solution(self, given_cards, solutions):
         print('check_solution')
-        if len(solution) != len(given_cards):
-            return False
+        given_colors = [self.card2color[card] for card in given_cards]
+        print(f'\tgiven_colors: {given_colors}')
 
-        for sol, given_card in zip(solution, given_cards):
-            print(f'\tsol: {sol}')
-            print(f'\tcard2sol[sol]: {card2sol[sol]} ({", ".join(self.card2color[card] for card in card2sol[sol])})')
-            print(f'\tgiven_card: {given_card} ({self.card2color[given_card]})')
-            if given_card not in card2sol[sol]:
-                print('\tsolution incorrect')
-                return False
-        print('\tsolution correct')
-        return True
+        if given_colors in solutions:
+            print('\tsolution correct')
+            return True
+
+        print('\tsolution incorrect')
+        return False
 
 
     def run(self):
@@ -154,7 +141,7 @@ class Puzzle():
             self.display.text(f'{"X" * current_card_index}', 0, 20, 1)
             self.display.show()
 
-            if self.check_solution(self.solution_level1, read_card_ids, self.card2sol_level1):
+            if self.check_solution(read_card_ids, self.solutions_level1):
                 self.display.fill(0)
                 self.display.text('Safe Word', 0, 0, 1)
                 self.display.text('TRUMP', 0, 20, 1)
@@ -178,13 +165,12 @@ class Puzzle():
 
 
     def print_solutions(self):
-        for puzzle_index, puzzle_name in enumerate(['gray', 'black']):
-            print(f'# Puzzle {puzzle_index + 1} ({puzzle_name})')
+        for box_index, solution in enumerate(self.solutions_level1):
+            print(f'# Box {box_index + 1}')
 
             print('## Level 1')
-            for i, sol in enumerate(self.solution_level1):
-                card = self.card2sol_level1[sol][puzzle_index]
-                print(f'\t{i + 1}: {self.card2color[card]}')
+            for i, color in enumerate(solution):
+                print(f'\t{i + 1}: {color}')
             print()
 
 
