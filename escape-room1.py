@@ -113,7 +113,7 @@ class Puzzle():
             while True:
                 print(f'current_card_index: {current_card_index}')
                 self.display.fill(0)
-                self.display.text('?', 0, 0, 1)
+                self.display.text('????', 0, 0, 1)
                 self.display.text(f'{"X" * current_card_index}', 0, 20, 1)
                 self.display.show()
 
@@ -143,8 +143,8 @@ class Puzzle():
 
             if self.check_solution(read_card_ids, self.solutions_level1):
                 self.display.fill(0)
-                self.display.text('Safe Word', 0, 0, 1)
-                self.display.text('TRUMP', 0, 20, 1)
+                self.display.text('Inquisitor', 0, 20, 1)
+                # self.display.text('Seeker', 0, 20, 1)
                 self.display.show()
                 time.sleep(2) # sleep so one can read the messages on the screen
                 return # exit the function

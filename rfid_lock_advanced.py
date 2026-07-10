@@ -55,6 +55,14 @@ class Puzzle():
             8736126: 'Rot',
         }
 
+        # accepted color combinations for the single-level, either-box mode
+        # (either box unlocks). Duplicate-color cards are interchangeable.
+        self.solutions_level1 = [
+            ['Orange', 'Rot', 'Blau', 'Schwarz'],  # box 1
+            ['Gelb', 'Rot', 'Blau', 'Grau'],       # box 2
+        ]
+
+        # kept for the ordered, per-position two-level mode (see level2):
         self.card2sol_level1 = {
             #     puzzle1,  puzzle2,   # puzzle1,  puzzle2,
             'A': [13012325, 15798243], # grey,     orange
@@ -234,6 +242,8 @@ class Puzzle():
 
 
     def check_solution(self, solution, given_cards, card2sol):
+        # ordered, per-position check: the scanned card at each position must
+        # be one of the cards allowed for that position. Used by level2.
         print('check_solution')
         for sol, given_card in zip(solution, given_cards):
             print(f'\tsol: {sol}')
@@ -246,16 +256,32 @@ class Puzzle():
         return True
 
 
+    def check_solution_colors(self, given_cards, solutions):
+        # color-based check: the scanned colors must match one accepted
+        # sequence exactly (either box unlocks). Used by level1.
+        print('check_solution_colors')
+        given_colors = [self.card2color[card] for card in given_cards]
+        print(f'\tgiven_colors: {given_colors}')
+
+        if given_colors in solutions:
+            print('\tsolution correct')
+            return True
+
+        print('\tsolution incorrect')
+        return False
+
+
     def run(self):
         self.level1()
         # self.level2()
 
-        self.display.fill(0)
-        self.display.text('Code:', 0, 0, 1)
-        # TODO: adjust this
-        # rechts-links-links-unten-rechts-oben-rechts-links
-        self.display.text('RLLURORL', 0, 50, 1)
-        self.display.show()
+        # final code screen, only needed when running both levels:
+        # self.display.fill(0)
+        # self.display.text('Code:', 0, 0, 1)
+        # # TODO: adjust this
+        # # rechts-links-links-unten-rechts-oben-rechts-links
+        # self.display.text('RLLURORL', 0, 50, 1)
+        # self.display.show()
 
 
     def level1(self):
@@ -269,7 +295,7 @@ class Puzzle():
             while True:
                 print(f'current_card_index: {current_card_index}')
                 self.display.fill(0)
-                self.display.text('Level 1', 0, 0, 1)
+                # self.display.text('Level 1', 0, 0, 1)
                 self.display.text(f'{"X" * current_card_index:?<4}', 0, 20, 1)
                 self.display.show()
 
@@ -292,7 +318,7 @@ class Puzzle():
                 time.sleep(0.2)
 
             self.display.fill(0)
-            self.display.text('Level 1', 0, 0, 1)
+            # self.display.text('Level 1', 0, 0, 1)
             self.display.text(f'{"X" * current_card_index:?<4}', 0, 20, 1)
             self.display.show()
 
@@ -303,18 +329,19 @@ class Puzzle():
                 self.btn_led.off()
                 time.sleep(0.2)
 
-            if self.check_solution(self.solution_level1, read_card_ids, self.card2sol_level1):
+            if self.check_solution_colors(read_card_ids, self.solutions_level1):
                 self.display.fill(0)
-                self.display.text('Level 1', 0, 0, 1)
-                self.display.text(f'{"X" * current_card_index:?<4}', 0, 20, 1)
-                self.display.text('SOLVED!', 0, 40, 1)
+                # self.display.text('Access code 1', 0, 0, 1)
+                # self.display.text('Seeker', 0, 20, 1)
+                self.display.text('Access code 2', 0, 0, 1)
+                self.display.text('Commander', 0, 20, 1)
                 self.display.show()
                 time.sleep(2) # sleep so one can read the messages on the screen
                 return # exit the function
 
             else:
                 self.display.fill(0)
-                self.display.text('Level 1', 0, 0, 1)
+                # self.display.text('Level 1', 0, 0, 1)
                 self.display.text(f'{"X" * current_card_index:?<4}', 0, 20, 1)
                 self.display.text('WRONG!', 0, 40, 1)
                 self.display.show()
